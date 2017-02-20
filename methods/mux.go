@@ -3,7 +3,7 @@ package methods
 import (
 	hversion "github.com/hashicorp/go-version"
 	"github.com/gorilla/mux"
-	"github.com/Pocketbrain/api-base-test/versionify"
+	"github.com/Pocketbrain/versionify"
 	"net/http"
 	"fmt"
 )
