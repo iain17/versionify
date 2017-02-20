@@ -3,6 +3,7 @@ package versionify
 import (
 	"sort"
 	"fmt"
+	"errors"
 )
 
 type VersionRegistrator func(version *Version, methods Methods)
@@ -11,6 +12,7 @@ type VersionRegistrator func(version *Version, methods Methods)
 type Versionify interface{
 	NewVersion(ver string) (*Version, error)
 	sort()
+	exists(ver *Version) bool
 	GetMethods(version *Version) Methods
 	Register(registrator VersionRegistrator)
 }
@@ -33,9 +35,25 @@ func (v *versionify) NewVersion(ver string) (*Version, error) {
 	if err != nil {
 		return nil, err
 	}
+	if v.exists(version) {
+		return nil, errors.New("This version is already registered.")
+	}
+
 	v.versions = append(v.versions, version)
 	v.sort()
 	return version, nil
+}
+
+/**
+Check if version isn't already registered.
+ */
+func (v *versionify) exists(ver *Version) bool {
+	for _, version := range v.versions {
+		if version.Equal(&ver.Version) {
+			return true
+		}
+	}
+	return false
 }
 
 /**
