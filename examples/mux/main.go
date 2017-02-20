@@ -17,6 +17,7 @@ func main() {
 	//Registers our versions.
 	handlers.V1(v)
 	handlers.V2(v)
+	handlers.V3(v)
 
 	//Connect versions to router
 	router := mux.NewRouter()
