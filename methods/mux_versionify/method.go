@@ -1,4 +1,4 @@
-package methods
+package mux_versionify
 
 import (
 	hversion "github.com/hashicorp/go-version"
@@ -16,7 +16,7 @@ type MuxMethod struct {
 	registerFunc RegisterRoutesFunc
 }
 
-func NewMuxMethod(registerFunc RegisterRoutesFunc, constraints hversion.Constraints) versionify.Method {
+func NewMethod(registerFunc RegisterRoutesFunc, constraints hversion.Constraints) versionify.Method {
 	return &MuxMethod{
 		registerFunc: registerFunc,
 		Constraints: constraints,
@@ -25,7 +25,7 @@ func NewMuxMethod(registerFunc RegisterRoutesFunc, constraints hversion.Constrai
 
 //A simplification of NewMuxMethod
 //constraint ">= 1.0, < 1.4"
-func NewMuxRoute(version *versionify.Version, path string, f func(http.ResponseWriter, *http.Request), constraints string, methods ...string) versionify.Method {
+func NewRoute(version *versionify.Version, path string, f func(http.ResponseWriter, *http.Request), constraints string, methods ...string) versionify.Method {
 	name := path
 	register := func(r *mux.Router) {
 		r.HandleFunc(path, f).Methods(methods...)
@@ -38,7 +38,7 @@ func NewMuxRoute(version *versionify.Version, path string, f func(http.ResponseW
 			fmt.Println(fmt.Errorf("Could not create constraint: %v", err))
 		}
 	}
-	method, err := version.Method(name, NewMuxMethod(register, Constraints))
+	method, err := version.Method(name, NewMethod(register, Constraints))
 	if err != nil {
 		panic(fmt.Errorf("Could not create mux route: %v", err))
 	}
