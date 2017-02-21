@@ -1,25 +1,25 @@
 package mux_versionify
 
 import (
-	hversion "github.com/hashicorp/go-version"
-	"github.com/gorilla/mux"
-	"github.com/Pocketbrain/versionify"
-	"net/http"
 	"fmt"
+	"github.com/Pocketbrain/versionify"
+	"github.com/gorilla/mux"
+	hversion "github.com/hashicorp/go-version"
+	"net/http"
 )
 
 //A versionify.Method implementation for the mux router. Commonly used in web packages to register the routing of a web application.
 type RegisterRoutesFunc func(r *mux.Router)
 
 type MuxMethod struct {
-	Constraints hversion.Constraints
+	Constraints  hversion.Constraints
 	registerFunc RegisterRoutesFunc
 }
 
 func NewMethod(registerFunc RegisterRoutesFunc, constraints hversion.Constraints) versionify.Method {
 	return &MuxMethod{
 		registerFunc: registerFunc,
-		Constraints: constraints,
+		Constraints:  constraints,
 	}
 }
 
@@ -46,8 +46,8 @@ func NewRoute(version *versionify.Version, path string, f func(http.ResponseWrit
 }
 
 /**
- Called when a method is added for a version, to check a possible set constraint.
- */
+Called when a method is added for a version, to check a possible set constraint.
+*/
 func (m *MuxMethod) Check(v *versionify.Version) bool {
 	if m.Constraints == nil {
 		return true

@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
+	"fmt"
 	"github.com/Pocketbrain/versionify"
+	"github.com/Pocketbrain/versionify/examples/mux/handlers"
 	"github.com/Pocketbrain/versionify/methods/mux_versionify"
+	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 	"net/http"
-	"github.com/Pocketbrain/versionify/examples/mux/handlers"
-	"fmt"
 )
 
 func main() {

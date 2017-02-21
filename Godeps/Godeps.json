@@ -1,0 +1,38 @@
+{
+	"ImportPath": "github.com/Pocketbrain/versionify",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/davecgh/go-spew/spew",
+			"Rev": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.1-21-gcf79e51",
+			"Rev": "cf79e51a62d8219d52060dfc1b4e810414ba2d15"
+		},
+		{
+			"ImportPath": "github.com/hashicorp/go-version",
+			"Rev": "03c5bf6be031b6dd45afec16b1cf94fc8938bc77"
+		},
+		{
+			"ImportPath": "github.com/pmezard/go-difflib/difflib",
+			"Comment": "v1.0.0",
+			"Rev": "792786c7400a136282c1664665ae0a8db921c6c2"
+		},
+		{
+			"ImportPath": "github.com/urfave/negroni",
+			"Comment": "v0.2.0-102-g3c4d1f4",
+			"Rev": "3c4d1f44e5d9d1eb5acf3c661a17aaa837d1a067"
+		},
+		{
+			"ImportPath": "gopkg.in/stretchr/testify.v1/assert",
+			"Comment": "v1.1.4",
+			"Rev": "69483b4bd14f5845b5a1e55bca19e954e827f1d0"
+		}
+	]
+}
