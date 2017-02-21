@@ -46,6 +46,19 @@ func TestVersionify_GetMethods(t *testing.T) {
 	assert.Equal(t, 3, len(methodsV4), "Due to the testMethod. Eventhough we haven't added any. all methods are inherited")
 }
 
+func TestVersionify_NewVersion(t *testing.T) {
+	v := New()
+	_, err := v.NewVersion("1.0")
+	assert.NoError(t, err)
+	_, err = v.NewVersion("2.0")
+	assert.NoError(t, err)
+	_, err = v.NewVersion("2.0")
+	assert.Error(t, err, "Version 2 is already registered!")
+	_, err = v.NewVersion("abc")
+	assert.Error(t, err, "This is not a real version?")
+
+}
+
 func TestVersionify_Register(t *testing.T) {
 	//Setup
 	v := New()
