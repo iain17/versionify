@@ -40,3 +40,31 @@ func (v *Version) Method(name string, method Method) (Method, error) {
 	v.methods[name] = method
 	return v.methods[name], nil
 }
+
+/**
+Returns all the methods of this version.
+*/
+func (v *Version) GetMethods() Methods {
+	return v.methods
+}
+
+/**
+Returns the length of this array
+*/
+func (v Versions) Len() int {
+	return len(v)
+}
+
+/**
+Used by the sorting package to sort. Returns if one item in the array is less than another.
+*/
+func (v Versions) Less(i, j int) bool {
+	return v[i].LessThan(&v[j].Version)
+}
+
+/**
+Used by the sorting package to sort. Swaps the versions.
+*/
+func (v Versions) Swap(i, j int) {
+	v[i], v[j] = v[j], v[i]
+}
