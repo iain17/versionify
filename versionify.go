@@ -1,15 +1,15 @@
 package versionify
 
 import (
-	"sort"
-	"fmt"
 	"errors"
+	"fmt"
+	"sort"
 )
 
 type VersionRegistrator func(version *Version, methods Methods)
 
 //The entry point of this package. Start a new instance of this and add versions.
-type Versionify interface{
+type Versionify interface {
 	NewVersion(ver string) (*Version, error)
 	sort()
 	exists(ver *Version) bool
@@ -29,7 +29,7 @@ func New() Versionify {
 
 /**
 Register a new version. Returns a Version object which can then be used to register methods on.
- */
+*/
 func (v *versionify) NewVersion(ver string) (*Version, error) {
 	version, err := newVersion(ver)
 	if err != nil {
@@ -46,7 +46,7 @@ func (v *versionify) NewVersion(ver string) (*Version, error) {
 
 /**
 Check if version isn't already registered.
- */
+*/
 func (v *versionify) exists(ver *Version) bool {
 	for _, version := range v.versions {
 		if version.Equal(&ver.Version) {
@@ -58,14 +58,14 @@ func (v *versionify) exists(ver *Version) bool {
 
 /**
 Sort the versions. See versions.go to understand how its being sorted.
- */
+*/
 func (v *versionify) sort() {
 	sort.Sort(v.versions)
 }
 
 /**
 Get the methods of a version. Taking into account previous versions and inheriting the methods of these versions.
- */
+*/
 func (v *versionify) GetMethods(version *Version) Methods {
 	methods := Methods{}
 	for _, curVersion := range v.versions {
@@ -89,4 +89,32 @@ func (v *versionify) Register(registrator VersionRegistrator) {
 	for _, version := range v.versions {
 		registrator(version, v.GetMethods(version))
 	}
+}
+
+/**
+Returns all the methods of this version.
+*/
+func (v *Version) GetMethods() Methods {
+	return v.methods
+}
+
+/**
+Returns the length of this array
+*/
+func (v Versions) Len() int {
+	return len(v)
+}
+
+/**
+Used by the sorting package to sort. Returns if one item in the array is less than another.
+*/
+func (v Versions) Less(i, j int) bool {
+	return v[i].LessThan(&v[j].Version)
+}
+
+/**
+Used by the sorting package to sort. Swaps the versions.
+*/
+func (v Versions) Swap(i, j int) {
+	v[i], v[j] = v[j], v[i]
 }
