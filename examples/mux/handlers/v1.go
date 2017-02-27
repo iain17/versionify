@@ -12,8 +12,8 @@ func V1(v versionify.Versionify) {
 		panic(err)
 	}
 	//Routes
-	mux_versionify.NewRoute(v1, "/foo", fooV1, "", "GET")
-	mux_versionify.NewRoute(v1, "/bar", barV1, "", "GET")
+	mux_versionify.NewHandlerFunc(v1, "/foo", fooV1, "", "GET")
+	mux_versionify.NewHandlerFunc(v1, "/bar", barV1, "", "GET")
 }
 
 func fooV1(w http.ResponseWriter, r *http.Request) {

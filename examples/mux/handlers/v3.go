@@ -12,7 +12,7 @@ func V3(v versionify.Versionify) {
 		panic(err)
 	}
 	//Routes
-	mux_versionify.NewRoute(v3, "/bjorn", bjornV3, "", "GET")
+	mux_versionify.NewHandlerFunc(v3, "/bjorn", bjornV3, "", "GET")
 }
 
 func bjornV3(w http.ResponseWriter, r *http.Request) {

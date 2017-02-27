@@ -23,12 +23,11 @@ func NewMethod(registerFunc RegisterRoutesFunc, constraints hversion.Constraints
 	}
 }
 
-//A simplification of NewMuxMethod
-//constraint ">= 1.0, < 1.4"
-func NewRoute(version *versionify.Version, path string, f func(http.ResponseWriter, *http.Request), constraints string, methods ...string) versionify.Method {
+// Handler sets a handler for the route.
+func NewHandler(version *versionify.Version, path string, handler http.Handler, constraints string, methods ...string) versionify.Method {
 	name := path
 	register := func(r *mux.Router) {
-		r.HandleFunc(path, f).Methods(methods...)
+		r.PathPrefix(path).Handler(handler).Methods(methods...)
 	}
 	var Constraints hversion.Constraints
 	var err error
@@ -45,6 +44,11 @@ func NewRoute(version *versionify.Version, path string, f func(http.ResponseWrit
 	return method
 }
 
+// HandlerFunc sets a handler function for the route.
+func NewHandlerFunc(version *versionify.Version, path string, f func(http.ResponseWriter, *http.Request), constraints string, methods ...string) versionify.Method {
+	return NewHandler(version, path, http.HandlerFunc(f), constraints, methods...)
+}
+
 /**
 Called when a method is added for a version, to check a possible set constraint.
 */
@@ -53,4 +57,12 @@ func (m *MuxMethod) Check(v *versionify.Version) bool {
 		return true
 	}
 	return m.Constraints.Check(&v.Version)
+}
+
+func Middleware(h http.Handler) http.Handler {
+	return http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			h.ServeHTTP(w, r)
+		},
+	)
 }
