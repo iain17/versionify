@@ -3,6 +3,7 @@ package versionify
 import (
 	"errors"
 	"sort"
+	"fmt"
 )
 
 type VersionRegistrator func(version *Version, methods Methods)
@@ -14,10 +15,12 @@ type Versionify interface {
 	exists(ver *Version) bool
 	GetMethods(version *Version) Methods
 	Register(registrator VersionRegistrator)
+	SetReverse(value bool)
 }
 
 type versionify struct {
 	versions Versions
+	reverse bool
 }
 
 func New() Versionify {
@@ -59,7 +62,18 @@ func (v *versionify) exists(ver *Version) bool {
 Sort the versions. See versions.go to understand how its being sorted.
 */
 func (v *versionify) sort() {
-	sort.Sort(v.versions)
+	if v.reverse {
+		sort.Sort(sort.Reverse(v.versions))
+	} else {
+		sort.Sort(v.versions)
+	}
+}
+
+/**
+Reverse sorting. This will make the
+ */
+func (v *versionify) SetReverse(value bool) {
+	v.reverse = value
 }
 
 /**
@@ -68,15 +82,23 @@ Get the methods of a version. Taking into account previous versions and inheriti
 func (v *versionify) GetMethods(version *Version) Methods {
 	methods := Methods{}
 	for _, curVersion := range v.versions {
-		if curVersion.GreaterThan(&version.Version) {
-			break
-		}
-		for k, v := range curVersion.GetMethods() {
-			if !v.Check(version) {
-				//fmt.Printf("Method '%s' from v%s did not pass constraint for v%s\n", k, curVersion.String(), version.String())
+		//Fail safe. Should not happen due to the sorting
+		if v.reverse {
+			if curVersion.LessThan(&version.Version) {
 				continue
 			}
-			methods[k] = v
+		} else {
+			if curVersion.GreaterThan(&version.Version) {
+				continue
+			}
+		}
+
+		for k, method := range curVersion.GetMethods() {
+			if !method.Check(version) {
+				fmt.Printf("Method '%s' from v%s did not pass constraint for v%s\n", k, curVersion.String(), version.String())
+				continue
+			}
+			methods[k] = method
 		}
 	}
 	return methods

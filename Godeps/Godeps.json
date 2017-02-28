@@ -7,6 +7,11 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/Sirupsen/logrus",
+			"Comment": "v0.11.0-10-ga437dfd",
+			"Rev": "a437dfd2463eaedbec3dfe443e477d3b0a810b3f"
+		},
+		{
 			"ImportPath": "github.com/davecgh/go-spew/spew",
 			"Rev": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
 		},
@@ -20,6 +25,10 @@
 			"Rev": "03c5bf6be031b6dd45afec16b1cf94fc8938bc77"
 		},
 		{
+			"ImportPath": "github.com/meatballhat/negroni-logrus",
+			"Rev": "7c570a907cfc69cdc004ad506c6f5e234815b936"
+		},
+		{
 			"ImportPath": "github.com/pmezard/go-difflib/difflib",
 			"Comment": "v1.0.0",
 			"Rev": "792786c7400a136282c1664665ae0a8db921c6c2"
@@ -28,6 +37,10 @@
 			"ImportPath": "github.com/urfave/negroni",
 			"Comment": "v0.2.0-102-g3c4d1f4",
 			"Rev": "3c4d1f44e5d9d1eb5acf3c661a17aaa837d1a067"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "30de6d19a3bd89a5f38ae4028e23aaa5582648af"
 		},
 		{
 			"ImportPath": "gopkg.in/stretchr/testify.v1/assert",

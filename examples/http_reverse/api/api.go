@@ -3,25 +3,27 @@ package api
 import (
 	"fmt"
 	"github.com/Pocketbrain/versionify"
-	"github.com/Pocketbrain/versionify/examples/http/api/v1"
-	"github.com/Pocketbrain/versionify/examples/http/api/v2"
-	"github.com/Pocketbrain/versionify/examples/http/api/v3"
 	"github.com/Pocketbrain/versionify/methods/http_versionify"
 	logger "github.com/Sirupsen/logrus"
 	"github.com/urfave/negroni"
 	"github.com/gorilla/mux"
 	"github.com/meatballhat/negroni-logrus"
 	"net/http"
+	"github.com/Pocketbrain/versionify/examples/http_reverse/api/v1"
+	"github.com/Pocketbrain/versionify/examples/http_reverse/api/v2"
+	"github.com/Pocketbrain/versionify/examples/http_reverse/api/latest"
 )
+
 
 func Setup() {
 	//Initialize versionify
 	vy := versionify.New()
+	vy.SetReverse(true)
 
 	//Call the setup methods per version
 	v1.Setup(vy)
 	v2.Setup(vy)
-	v3.Setup(vy)
+	latest.Setup(vy)
 
 	//Connect versions to router
 	router := mux.NewRouter()
