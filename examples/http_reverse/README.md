@@ -1,8 +1,9 @@
 # Latest http example
 
-This example show cases how you can run a http webserver with versionify. This example contains a different structure than the http directory.
+This example show cases how you can run a http webserver with versionify. This example proposes a different structure where there is one latest version.
 
-This structure hqw one latest version. This version contains all the relevant code and operates on a /v.x.x.x sub route.
-Any old depercated methods are defined the other directories.
+This "latest" version contains all the latest relevant code. Any lower versions extend on this latest version adding/overiding methods with what is still deprecated.
+It is also called reverse, since we take the highest version (latest) and any lower version extends on this version.
 
-So we take the highest version (latest) and any lower version extends on this version. Also why we call it reverse!
+
+This allows for a different way of working. You work primarily in the latest directory and when there is a breaking change you up the latest version and move the handler to its respective older version directory.
