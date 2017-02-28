@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/Pocketbrain/versionify"
-	"github.com/Pocketbrain/versionify/examples/mux/handlers"
-	"github.com/Pocketbrain/versionify/methods/mux_versionify"
+	"github.com/Pocketbrain/versionify/examples/http/handlers"
+	"github.com/Pocketbrain/versionify/methods/http_versionify"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 	"net/http"
@@ -21,7 +21,16 @@ func main() {
 
 	//Connect versions to router
 	router := mux.NewRouter()
-	v.Register(mux_versionify.NewRegistrator(router))
+	v.Register(http_versionify.NewMuxRegistrator(router))
+
+	router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
+		t, err := route.GetPathTemplate()
+		if err != nil {
+			return err
+		}
+		fmt.Println(t)
+		return nil
+	})
 
 	//Default simple negroni code.
 	n := negroni.Classic()

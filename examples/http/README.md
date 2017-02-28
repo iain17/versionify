@@ -1,6 +1,6 @@
-# Mux example
+# Http example
 
-This example show cases how you can run a negroni webserver with versionify, using the mux routes.
+This example show cases how you can run a http webserver with versionify.
 
 ## Run the example
 

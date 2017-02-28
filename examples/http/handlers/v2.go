@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/Pocketbrain/versionify"
-	"github.com/Pocketbrain/versionify/methods/mux_versionify"
+	"github.com/Pocketbrain/versionify/methods/http_versionify"
 	"net/http"
 )
 
@@ -12,8 +12,8 @@ func V2(v versionify.Versionify) {
 		panic(err)
 	}
 	//Routes
-	mux_versionify.NewHandlerFunc(v2, "/bar", barV2, "", "GET")
-	mux_versionify.NewHandlerFunc(v2, "/iain", iainV2, "<= 2.0", "GET")
+	http_versionify.NewHandlerFunc(v2, "/bar", barV2, "GET")
+	http_versionify.NewHandlerFunc(v2, "/iain", iainV2, "GET").Constrain("<= 2.0")
 }
 
 func barV2(w http.ResponseWriter, r *http.Request) {

@@ -2,7 +2,6 @@ package versionify
 
 import (
 	"errors"
-	"fmt"
 	"sort"
 )
 
@@ -74,7 +73,7 @@ func (v *versionify) GetMethods(version *Version) Methods {
 		}
 		for k, v := range curVersion.GetMethods() {
 			if !v.Check(version) {
-				fmt.Println("Method did not pass constraint")
+				//fmt.Printf("Method '%s' from v%s did not pass constraint for v%s\n", k, curVersion.String(), version.String())
 				continue
 			}
 			methods[k] = v

@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/Pocketbrain/versionify"
-	"github.com/Pocketbrain/versionify/methods/mux_versionify"
+	"github.com/Pocketbrain/versionify/methods/http_versionify"
 	"net/http"
 )
 
@@ -12,9 +12,9 @@ func V3(v versionify.Versionify) {
 		panic(err)
 	}
 	//Routes
-	mux_versionify.NewHandlerFunc(v3, "/bjorn", bjornV3, "", "GET")
+	http_versionify.NewHandlerFunc(v3, "/bjorn", bjornV3, "", "GET")
 }
 
 func bjornV3(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Iain on version 2! Not available on version 1!"))
+	w.Write([]byte("Bjorn on version 3! Not available on version 2!"))
 }
