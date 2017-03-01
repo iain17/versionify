@@ -13,11 +13,12 @@ func NewMuxRegistrator(router *mux.Router) versionify.VersionRegistrator {
 		path := "/v" + version.String()
 		//fmt.Printf("Registering sub route '%s'\n", path)
 		versionRouter := router.PathPrefix(path).Subrouter()
-		for _, _method := range methods {
-			httpMethod := _method.(*HttpMethod)
-			handler := httpMethod.getHandler()
-			versionRouter.Handle(httpMethod.path, handler).Methods(httpMethod.methods...)
-			//fmt.Printf("Registering handler with name '%s' and path %s\n", name, path + httpMethod.path)
+		for _, method := range methods {
+			if  httpMethod, ok := method.(*HttpMethod); ok {
+				handler := httpMethod.getHandler()
+				versionRouter.Handle(httpMethod.path, handler).Methods(httpMethod.methods...)
+				//fmt.Printf("Registering handler with name '%s' and path %s\n", name, path + httpMethod.path)
+			}
 		}
 	}
 }
